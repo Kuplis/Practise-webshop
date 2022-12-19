@@ -20,4 +20,4 @@ registerUser($uname, $passwd);
 $_SESSION['username'] = $uname;
 
 http_response_code(200);
-echo "Käyttäjä " .$uname. " rekisteröity. Salasana " .$passwd;
+echo "Käyttäjä " .$uname. " rekisteröity.";
