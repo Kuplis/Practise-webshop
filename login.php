@@ -9,7 +9,7 @@ if(isset($_SESSION['username'])) {
   return;
 }
 
-if(isset($_POST['uname']) || (isset($_POST['passwd']))) {
+if(!isset($_POST['uname']) || (!isset($_POST['passwd']))) {
   http_response_code(401);
   echo "Käyttäjää ei löytynyt.";
   return;
