@@ -11,8 +11,8 @@ create table category (
 
 create table user (
 	user_id INTEGER primary key not null,
-  username varchar(200) not null,
-  password varchar(200) not null
+  username varchar(200),
+  password varchar(200)
 );
 
 create table product (
@@ -20,7 +20,7 @@ create table product (
 	tea_name varchar(50) not null,
 	cat_id INTEGER not null,
 	price DECIMAL(6,2),
-	--index cat_id(cat_id)
+	index cat_id(cat_id)
 	foreign key(cat_id) references category(cat_id)
 );
 
@@ -29,31 +29,26 @@ create table customer (
 	firstname varchar(50) not null,
 	lastname VARCHAR(50) not null,
 	address varchar(250) not null,
-	postcode smallint(5) not null,
+	postcode varchar(10) not null,
 	city varchar(50) not null,
-	telnro smallint(10) not null,
-	email varchar(250) not null
+	telnro varchar(20) not null,
+	email varchar(250) not null unique
 );
-create table image (
-	
-)
 
-
-
-create table orders (
-	order_id INTEGER primary key,
+create table order (
+	order_id INTEGER primary key not null,
 	customer_id int not null, 
-	order_date timestamp default CURRENT_TIMESTAMP,
+	order_date DATETIME CURRENT_TIMESTAMP,
 	foreign key(customer_id) references customer(customer_id)
 	on delete restrict
 );
 
-create table order_specs (
-	order_id INTEGER not null,
+create table order_info (
+	row_id INTEGER not null primary key,
+ 	order_id INTEGER not null,
 	product_id INTEGER not null,
 	amount INTEGER not null,
-	primary key(order_id, product_id),
-	foreign key(order_id) references orders(order_id),
+	foreign key(order_id) references order(order_id),
 	foreign key(product_id) references product(product_id)
 	on delete restrict
 );

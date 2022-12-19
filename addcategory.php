@@ -1,25 +1,22 @@
 <?php
-require('./functions.php');
-$db=createSqliteConnection('./teashop.db');
+require('functions.php');
+require('headers.php');
 
-$body =file_get_contents('php://input');
-$dataobject = json_decode($body);
-
-$sql= "insert into category (cat_name) values (?)";
-$statement = $db->prepare($sql);
-$category = '';
-$statement ->bindParam(1, $category);
-
-foreach($dataobject as $name) {
-  $category = $name;
-  $statement ->execute();
+if (isset($_POST['cat_name'])) { //meneeköhän näin??
+  return;
 }
-/*
-$category = $_POST['cat_name'];
+$input = json_decode(file_get_contents('php://input'));
+$cat_name = filter_var($input->cat_name, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-$sql= "insert into category (cat_name) values (?)";
 
-$statement =$db->prepare($sql);
-$statement ->bindParam(1, $category);
-$statement ->execute();
-*/
+//$cat_name = $_POST['cat_name'];
+
+try {
+  $db = createSqliteConnection('teashop.db');
+  $sql = "insert into category (cat_name) values (?)";
+  $statement = $db->prepare($sql);
+  $statement ->execute(array($cat_name));
+  
+} catch (PDOException $pdoex) {
+  returnError($pdoex);
+}
