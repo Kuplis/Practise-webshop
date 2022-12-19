@@ -29,7 +29,7 @@ create table customer (
 	email varchar(250) not null unique
 );
 
-create table `order` (
+create table order_ (
 	order_id INTEGER primary key not null,
 	customer_id int not null, 
 	order_date DATETIME CURRENT_TIMESTAMP,
@@ -42,7 +42,7 @@ create table order_info (
  	order_id INTEGER not null,
 	product_id INTEGER not null,
 	amount INTEGER not null,
-	foreign key(order_id) references `order`(order_id),
+	foreign key(order_id) references order(order_id),
 	foreign key(product_id) references product(product_id)
 	on delete restrict
 );
